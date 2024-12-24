@@ -13,6 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         password: configService.getOrThrow<string>('DATABASE_PASSWORD'),
         database: configService.getOrThrow<string>('DATABASE'),
         entities: [`${__dirname}/**/**.entity{.ts,.js}`],
+        autoLoadEntities: true,
         synchronize: configService.getOrThrow<boolean>('DB_SYNC_ON'),
         // Need to disable this
         logging: true,
