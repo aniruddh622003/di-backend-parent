@@ -9,6 +9,10 @@ import {
 } from 'class-validator';
 
 export class SignUpDto {
+  /**
+   * User provided username that should be unique
+   * @example 'parent_user'
+   */
   @IsNotEmpty()
   @IsString()
   username: string;
@@ -18,7 +22,7 @@ export class SignUpDto {
   firstname: string;
 
   @IsString()
-  middlename: string;
+  middlename?: string;
 
   @IsNotEmpty()
   @IsString()

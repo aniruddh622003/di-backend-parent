@@ -7,17 +7,19 @@ import {
   IRequestWithJWTParsed,
   IRequestWithJWTRefreshParsed,
 } from '@di/auth-utils';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  private test = 0;
+  /**
+   * test
+   */
   @Post('/local/signup')
   async signupLocal(@Body() dto: SignUpDto): Promise<ITokenResponse> {
-    const response: ITokenResponse = {
-      data: null,
-      messages: [],
-    };
+    const response: ITokenResponse = { data: null, messages: [] };
 
     try {
       const tokens = await this.authService.signupLocal(dto);
@@ -47,6 +49,7 @@ export class AuthController {
     return response;
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Post('/logout')
   logout(@Req() req: IRequestWithJWTParsed) {
@@ -54,6 +57,7 @@ export class AuthController {
     this.authService.logout(user.sub);
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt-refresh'))
   @Post('/refresh')
   async refreshTokens(
